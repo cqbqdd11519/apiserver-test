@@ -1,6 +1,6 @@
 package internal
 
 const (
-	APIServiceName  = "v1.approval.tmax.io"
-	ServiceName = "approval-api"
+	APIServiceName = "v1.approval.tmax.io"
+	ServiceName    = "approval-api"
 )

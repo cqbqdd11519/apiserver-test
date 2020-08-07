@@ -26,9 +26,8 @@ const (
 	CertDir = "/tmp/approval-api"
 
 	K8sConfigMapName = "extension-apiserver-authentication"
-	K8sConfigMapKey = "requestheader-client-ca-file"
+	K8sConfigMapKey  = "requestheader-client-ca-file"
 )
-
 
 // Create and Store certificates for webhook server
 // server key / server cert is stored as file in CertDir
@@ -85,7 +84,7 @@ func tlsConfig(ctx context.Context, client client.Client) (*tls.Config, error) {
 	}
 
 	return &tls.Config{
-		ClientCAs: caPool,
+		ClientCAs:  caPool,
 		ClientAuth: tls.VerifyClientCertIfGiven,
 	}, nil
 }

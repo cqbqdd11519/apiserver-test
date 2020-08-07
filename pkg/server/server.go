@@ -24,7 +24,7 @@ var log = logf.Log.WithName("approve-server")
 
 type Server struct {
 	Wrapper *wrapper.RouterWrapper
-	Client client.Client
+	Client  client.Client
 }
 
 func New() *Server {

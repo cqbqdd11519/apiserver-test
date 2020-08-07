@@ -19,7 +19,7 @@ func Client(options client.Options) (client.Client, error) {
 	return c, nil
 }
 
-func AddSchemes(opt *client.Options, gv schema.GroupVersion, types... runtime.Object) {
+func AddSchemes(opt *client.Options, gv schema.GroupVersion, types ...runtime.Object) {
 	if opt.Scheme == nil {
 		opt.Scheme = runtime.NewScheme()
 	}

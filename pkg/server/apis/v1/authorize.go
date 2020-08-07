@@ -6,6 +6,11 @@ import (
 	"github.com/cqbqdd11519/apiserver-test/internal/utils"
 )
 
+const (
+	UserHeader  = "X-Remote-User"
+	GroupHeader = "X-Remote-Group"
+)
+
 func Authorize(h http.Handler) http.Handler {
 	return http.HandlerFunc(func(w http.ResponseWriter, req *http.Request) {
 		if req.TLS == nil || len(req.TLS.PeerCertificates) == 0 {
