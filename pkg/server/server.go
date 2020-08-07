@@ -17,7 +17,7 @@ import (
 
 	"github.com/cqbqdd11519/apiserver-test/internal/utils"
 	"github.com/cqbqdd11519/apiserver-test/internal/wrapper"
-	"github.com/cqbqdd11519/apiserver-test/pkg/apis"
+	"github.com/cqbqdd11519/apiserver-test/pkg/server/apis"
 )
 
 var log = logf.Log.WithName("approve-server")
