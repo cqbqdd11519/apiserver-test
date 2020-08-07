@@ -8,7 +8,6 @@ import (
 	"github.com/gorilla/mux"
 	tmaxv1 "github.com/tmax-cloud/approval-watcher/pkg/apis/tmax/v1"
 	"k8s.io/apimachinery/pkg/api/errors"
-	"k8s.io/apimachinery/pkg/runtime"
 	"k8s.io/apimachinery/pkg/runtime/schema"
 	"k8s.io/apimachinery/pkg/types"
 	"sigs.k8s.io/controller-runtime/pkg/client"
@@ -35,7 +34,7 @@ func AddRejectApis(parent *wrapper.RouterWrapper) error {
 	return nil
 }
 
-func updateDecision(w http.ResponseWriter, req *http.Request, decision tmaxv1.Result){
+func updateDecision(w http.ResponseWriter, req *http.Request, decision tmaxv1.Result) {
 	vars := mux.Vars(req)
 
 	ns, nsExist := vars["namespace"]
@@ -46,9 +45,7 @@ func updateDecision(w http.ResponseWriter, req *http.Request, decision tmaxv1.Re
 	}
 
 	opt := client.Options{}
-	opt.Scheme = runtime.NewScheme()
-	gv := schema.GroupVersion{Group: "tmax.io", Version: "v1"}
-	opt.Scheme.AddKnownTypes(gv, &tmaxv1.Approval{})
+	utils.AddSchemes(&opt, schema.GroupVersion{Group: "tmax.io", Version: "v1"}, &tmaxv1.Approval{})
 
 	c, err := utils.Client(opt)
 	if err != nil {
@@ -62,7 +59,7 @@ func updateDecision(w http.ResponseWriter, req *http.Request, decision tmaxv1.Re
 		log.Error(err, "cannot get approval")
 		if errors.IsNotFound(err) {
 			_ = utils.RespondError(w, http.StatusNotFound, fmt.Sprintf("there is no Approval %s/%s", ns, approvalName))
-		}else{
+		} else {
 			_ = utils.RespondError(w, http.StatusInternalServerError, "cannot get approval")
 		}
 		return

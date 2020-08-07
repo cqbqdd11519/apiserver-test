@@ -11,8 +11,8 @@ import (
 )
 
 const (
-	ApiGroup     = "approval.tmax.io"
-	ApiVersion   = "v1"
+	ApiGroup   = "approval.tmax.io"
+	ApiVersion = "v1"
 )
 
 var AddApiFuncs []func(*wrapper.RouterWrapper) error
@@ -35,7 +35,7 @@ func AddApis(parent *wrapper.RouterWrapper) error {
 func apisHandler(w http.ResponseWriter, _ *http.Request) {
 	groupVersion := metav1.GroupVersionForDiscovery{
 		GroupVersion: fmt.Sprintf("%s/%s", ApiGroup, ApiVersion),
-		Version: ApiVersion,
+		Version:      ApiVersion,
 	}
 
 	group := metav1.APIGroup{}
@@ -44,7 +44,7 @@ func apisHandler(w http.ResponseWriter, _ *http.Request) {
 	group.PreferredVersion = groupVersion
 	group.Versions = append(group.Versions, groupVersion)
 	group.ServerAddressByClientCIDRs = append(group.ServerAddressByClientCIDRs, metav1.ServerAddressByClientCIDR{
-		ClientCIDR: "0.0.0.0/0",
+		ClientCIDR:    "0.0.0.0/0",
 		ServerAddress: "",
 	})
 

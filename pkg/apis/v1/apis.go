@@ -41,11 +41,11 @@ func versionHandler(w http.ResponseWriter, _ *http.Request) {
 
 	apiResourceList.APIResources = []metav1.APIResource{
 		{
-			Name: fmt.Sprintf("%s/approve", ApprovalKind),
+			Name:       fmt.Sprintf("%s/approve", ApprovalKind),
 			Namespaced: true,
 		},
 		{
-			Name: fmt.Sprintf("%s/reject", ApprovalKind),
+			Name:       fmt.Sprintf("%s/reject", ApprovalKind),
 			Namespaced: true,
 		},
 	}

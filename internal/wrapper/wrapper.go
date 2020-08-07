@@ -18,7 +18,7 @@ type RouterWrapper struct {
 	Handler HandleFunc
 
 	Children []*RouterWrapper
-	Parent *RouterWrapper
+	Parent   *RouterWrapper
 }
 
 func New(path string, methods []string, handler HandleFunc) *RouterWrapper {
@@ -62,7 +62,7 @@ func (w *RouterWrapper) Add(child *RouterWrapper) error {
 func (w *RouterWrapper) FullPath() string {
 	if w.Parent == nil {
 		return w.SubPath
-	}else{
+	} else {
 		re := regexp.MustCompile(`/{2,}`)
 		return re.ReplaceAllString(w.Parent.FullPath()+w.SubPath, "/")
 	}

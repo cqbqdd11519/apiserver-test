@@ -12,7 +12,7 @@ func AddApprovalApis(parent *wrapper.RouterWrapper) error {
 		return err
 	}
 
-	// TODO: middleware - authenticate
+	approvalWrapper.Router.Use(Authorize)
 
 	if err := AddApproveApis(approvalWrapper); err != nil {
 		return err

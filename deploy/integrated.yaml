@@ -1,0 +1,100 @@
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRole
+metadata:
+  name: approval-api
+rules:
+  - apiGroups:
+      - ""
+    resources:
+      - configmaps
+    verbs:
+      - get
+      - list
+  - apiGroups:
+      - apiregistration.k8s.io
+    resources:
+      - apiservices
+    resourceNames:
+      - v1.approval.tmax.io
+    verbs:
+      - get
+      - patch
+      - update
+  - apiGroups:
+      - tmax.io
+    resources:
+      - 'approvals'
+      - 'approvals/status'
+    verbs:
+      - create
+      - delete
+      - get
+      - list
+      - patch
+      - update
+      - watch
+---
+apiVersion: v1
+kind: ServiceAccount
+metadata:
+  name: approval-api
+  namespace: approval-system
+---
+kind: ClusterRoleBinding
+apiVersion: rbac.authorization.k8s.io/v1
+metadata:
+  name: approval-api
+subjects:
+  - kind: ServiceAccount
+    name: approval-api
+    namespace: approval-system
+roleRef:
+  kind: ClusterRole
+  name: approval-api
+  apiGroup: rbac.authorization.k8s.io
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: approval-api
+  namespace: approval-system
+spec:
+  selector:
+    app: approval-api
+  ports:
+    - port: 443
+      targetPort: 443
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: approval-api
+  namespace: approval-system
+spec:
+  selector:
+    matchLabels:
+      app: approval-api
+  template:
+    metadata:
+      labels:
+        app: approval-api
+    spec:
+      serviceAccount: approval-api
+      containers:
+        - name: approval-api
+          image: 172.22.11.2:30500/approval-api:shkim
+          imagePullPolicy: Always
+---
+apiVersion: apiregistration.k8s.io/v1
+kind: APIService
+metadata:
+  name: v1.approval.tmax.io
+spec:
+  group: approval.tmax.io
+  groupPriorityMinimum: 100
+  service:
+    name: approval-api
+    namespace: approval-system
+    port: 443
+  version: v1
+  versionPriority: 100
