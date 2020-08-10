@@ -21,6 +21,12 @@ rules:
       - patch
       - update
   - apiGroups:
+      - authorization.k8s.io
+    resources:
+      - subjectaccessreviews
+    verbs:
+      - create
+  - apiGroups:
       - tmax.io
     resources:
       - 'approvals'

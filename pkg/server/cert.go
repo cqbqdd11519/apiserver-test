@@ -112,12 +112,3 @@ func getCAPool(ctx context.Context, client client.Client) (*x509.CertPool, error
 
 	return pool, nil
 }
-
-func verifyClientCert(rawCerts [][]byte, verifiedChains [][]*x509.Certificate) error {
-	log.Info(fmt.Sprintf("%d", len(rawCerts)))
-	for _, b := range rawCerts {
-		log.Info(string(b))
-	}
-
-	return nil
-}
