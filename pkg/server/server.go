@@ -66,6 +66,7 @@ func New() *Server {
 }
 
 func (s *Server) Start() {
+	log.Info("SERVER STARTS")
 	addr := "0.0.0.0:443"
 	log.Info(fmt.Sprintf("Server is running on %s", addr))
 
